@@ -4,16 +4,15 @@ import { AssetService } from '../../services/asset.service';
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
+  styleUrls: ['./admin-dashboard.component.css'],
 })
-export class AdminDashboardComponent implements OnInit {
+export class AdminDashboardComponent {
   serviceRequests: any[] = [];
 
   constructor(private assetService: AssetService) {}
 
-  ngOnInit() {
-    this.assetService.getServiceRequests().subscribe((requests: any[]) => {
-      this.serviceRequests = requests;
-    });
+  onActionClick() {
+    console.log('clicked');
   }
 
   updateRequestStatus(requestId: number, status: string) {

@@ -47,7 +47,7 @@ export class LoginComponent {
     this.authService.addToLocalStorage('username', this.credentials.username);
     // if (response.role === 'admin') {
     const role = 'admin';
-    if (role !== 'admin') {
+    if (role === 'admin') {
       this.router.navigate(['/admin-dashboard']);
     } else {
       this.router.navigate(['/employee-dashboard']);

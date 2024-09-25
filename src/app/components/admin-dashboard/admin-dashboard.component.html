@@ -1,10 +1,20 @@
-<app-header />
-<div>
-  <h2>Service Requests</h2>
-  <div *ngFor="let request of serviceRequests">
+<app-header></app-header>
+<div id="admin-dashboard-container">
+  <h2 id="dash-board-title">Admin Dashboard</h2>
+  <div id="actions-container">
+    <button (click)="onActionClick()" class="actions">Show All Assets</button>
+    <button (click)="onActionClick()" class="actions">
+      Show Available Assets
+    </button>
+    <button (click)="onActionClick()" class="actions">
+      Show Allocated Assets
+    </button>
+  </div>
+
+  <!-- <div *ngFor="let request of serviceRequests">
     <p>{{ request.assetName }} - {{ request.status }}</p>
     <button (click)="updateRequestStatus(request.id, 'resolved')">
       Mark as Resolved
     </button>
-  </div>
+  </div> -->
 </div>
