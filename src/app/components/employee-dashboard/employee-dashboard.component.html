@@ -1,7 +1,8 @@
+<app-header />
 <div>
   <h2>Your Assets</h2>
   <div *ngFor="let asset of assets">
-    <p>{{ asset.name }} ({{ asset.status }})</p>
-    <button (click)="requestAsset(asset.id)">Request New Asset</button>
+    <p>{{ asset.assetName }} ({{ asset.status }})</p>
+    <button (click)="requestAsset(asset.assetId)">Request New Asset</button>
   </div>
 </div>

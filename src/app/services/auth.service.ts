@@ -15,6 +15,9 @@ export class AuthService {
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/loginUser`, credentials);
   }
+  signup(userInfo: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/loginUser`, userInfo);
+  }
 
   isAuthenticated(): boolean {
     const token = this.getToken();
@@ -26,9 +29,16 @@ export class AuthService {
   getToken(): string | undefined {
     return localStorage.getItem('token') || undefined;
   }
+  getUserName(): string | undefined {
+    return localStorage.getItem('username') || undefined;
+  }
+  addToLocalStorage(key: string, value: string) {
+    localStorage.setItem(key, value);
+  }
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
   }
 
   getAuthHeaders() {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,11 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   credentials = { username: '', password: '' };
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private loadingService: LoadingService
+  ) {}
 
   // login field validation
   isValid(): boolean {
@@ -29,11 +34,20 @@ export class LoginComponent {
     if (!this.isValid()) {
       return;
     }
+    this.loadingService.setLoadingState(true);
+    setTimeout(() => {
+      this.loadingService.setLoadingState(false);
+    }, 2000);
+
+    // this.loadingService.setLoadingState(true);
     // this.authService.login(this.credentials).subscribe((response) => {
+    // this.loadingService.setLoadingState(false);
     // localStorage.setItem('token', response.token);
-    localStorage.setItem('token', 'empty token');
+    this.authService.addToLocalStorage('token', 'empty token');
+    this.authService.addToLocalStorage('username', this.credentials.username);
     // if (response.role === 'admin') {
-    if ('admin' === 'admin') {
+    const role = 'admin';
+    if (role !== 'admin') {
       this.router.navigate(['/admin-dashboard']);
     } else {
       this.router.navigate(['/employee-dashboard']);

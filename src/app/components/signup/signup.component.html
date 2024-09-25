@@ -1,0 +1,95 @@
+<div class="register-container">
+  <div class="select-box-container">
+    <label for="user-role">Role:</label>
+    <select id="user-role" name="userRole">
+      <option value="user">User</option>
+      <option value="admin">Admin</option>
+    </select>
+  </div>
+  <h1 id="register-title">Sign Up</h1>
+  <form id="registerForm" (submit)="register()">
+    <div class="input-group-register">
+      <label class="register-field-labels" for="firstname"
+        >First Name<span class="required">*</span></label
+      >
+      <input
+        class="register-fields"
+        [(ngModel)]="credentials.firstName"
+        type="text"
+        id="firstname"
+        name="firstname"
+        required
+      />
+    </div>
+    <div class="input-group-register">
+      <label class="register-field-labels" for="lastname"
+        >Last Name<span class="required">*</span></label
+      >
+      <input
+        class="register-fields"
+        [(ngModel)]="credentials.lastName"
+        type="text"
+        id="lastname"
+        name="lastname"
+        required
+      />
+    </div>
+    <div class="input-group-register">
+      <label class="register-field-labels" for="phoneno"
+        >Phone Number<span class="required">*</span></label
+      >
+      <input
+        class="register-fields"
+        [(ngModel)]="credentials.phoneno"
+        type="text"
+        id="phoneno"
+        name="phoneno"
+        maxlength="10"
+        pattern="\d*"
+        (keypress)="validateNumber($event)"
+        required
+      />
+    </div>
+    <div class="input-group-register">
+      <label class="register-field-labels" for="email"
+        >Email<span class="required">*</span></label
+      >
+      <input
+        class="register-fields"
+        [(ngModel)]="credentials.email"
+        type="text"
+        id="email"
+        name="email"
+        required
+      />
+    </div>
+    <div class="input-group-register">
+      <label class="register-field-labels" for="password"
+        >Password<span class="required">*</span></label
+      >
+      <input
+        class="register-fields"
+        [(ngModel)]="credentials.password"
+        type="password"
+        id="password"
+        name="password"
+        required
+      />
+    </div>
+    <div class="input-group-register">
+      <label class="register-field-labels" for="reTypePassword"
+        >Re-Type Password<span class="required">*</span></label
+      >
+      <input
+        class="register-fields"
+        [(ngModel)]="credentials.reTypePassword"
+        type="password"
+        id="reTypePassword"
+        name="reTypePassword"
+        required
+      />
+    </div>
+    <button id="register-btn" type="submit">Sign Up</button>
+    <p>Already have an account? <a routerLink="/login">Sign In</a></p>
+  </form>
+</div>
