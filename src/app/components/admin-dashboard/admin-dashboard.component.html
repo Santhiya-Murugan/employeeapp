@@ -1,0 +1,9 @@
+<div>
+  <h2>Service Requests</h2>
+  <div *ngFor="let request of serviceRequests">
+    <p>{{ request.assetName }} - {{ request.status }}</p>
+    <button (click)="updateRequestStatus(request.id, 'resolved')">
+      Mark as Resolved
+    </button>
+  </div>
+</div>

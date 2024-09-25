@@ -1,0 +1,28 @@
+<div class="login-container">
+  <h1 id="login-title">Login</h1>
+  <form id="loginForm" (submit)="login()">
+    <div class="input-group-login">
+      <label class="login-field-labels" for="username">Username</label>
+      <input
+        class="login-fields"
+        [(ngModel)]="credentials.username"
+        type="text"
+        id="username"
+        name="username"
+        required
+      />
+    </div>
+    <div class="input-group-login">
+      <label class="login-field-labels" for="password">Password</label>
+      <input
+        class="login-fields"
+        [(ngModel)]="credentials.password"
+        type="password"
+        id="password"
+        name="password"
+        required
+      />
+    </div>
+    <button id="login-btn" type="submit">Login</button>
+  </form>
+</div>

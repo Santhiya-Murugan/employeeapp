@@ -1,0 +1,7 @@
+<div>
+  <h2>Your Assets</h2>
+  <div *ngFor="let asset of assets">
+    <p>{{ asset.name }} ({{ asset.status }})</p>
+    <button (click)="requestAsset(asset.id)">Request New Asset</button>
+  </div>
+</div>
