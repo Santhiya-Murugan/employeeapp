@@ -19,6 +19,17 @@
   flex-direction: row;
   gap: 20px;
 }
+#content {
+  margin-top: 10px;
+  /* padding: 20px; */
+}
+.content {
+  width: 97.5vw;
+  padding: 10px;
+}
+.active-content {
+  background-color: #94cffc;
+}
 /* #dash-board-title {
   margin-left: 20px;
 } */

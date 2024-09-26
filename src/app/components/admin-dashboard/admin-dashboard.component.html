@@ -2,19 +2,49 @@
 <div id="admin-dashboard-container">
   <h2 id="dash-board-title">Admin Dashboard</h2>
   <div id="actions-container">
-    <button (click)="onActionClick()" class="actions">Show All Assets</button>
-    <button (click)="onActionClick()" class="actions">
+    <button
+      [ngClass]="{ 'active-content': content === 1 }"
+      (click)="onActionClick(1)"
+      class="actions"
+    >
+      Show All Assets
+    </button>
+    <button
+      [ngClass]="{ 'active-content': content === 2 }"
+      (click)="onActionClick(2)"
+      class="actions"
+    >
       Show Available Assets
     </button>
-    <button (click)="onActionClick()" class="actions">
+    <button
+      [ngClass]="{ 'active-content': content === 3 }"
+      (click)="onActionClick(3)"
+      class="actions"
+    >
       Show Allocated Assets
     </button>
   </div>
 
-  <!-- <div *ngFor="let request of serviceRequests">
-    <p>{{ request.assetName }} - {{ request.status }}</p>
-    <button (click)="updateRequestStatus(request.id, 'resolved')">
-      Mark as Resolved
-    </button>
-  </div> -->
+  <div id="content">
+    <div *ngIf="content === 1" id="content-1" class="content">
+      <app-material-table
+        [dataSource]="dataSourceAll"
+        [displayedColumns]="displayedColumns"
+      ></app-material-table>
+    </div>
+
+    <div *ngIf="content === 2" id="content-2" class="content">
+      <app-material-table
+        [dataSource]="dataSourceAvailable"
+        [displayedColumns]="displayedColumns"
+      ></app-material-table>
+    </div>
+
+    <div *ngIf="content === 3" id="content-3" class="content">
+      <app-material-table
+        [dataSource]="dataSourceAllocated"
+        [displayedColumns]="displayedColumns"
+      ></app-material-table>
+    </div>
+  </div>
 </div>

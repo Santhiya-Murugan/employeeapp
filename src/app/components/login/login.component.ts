@@ -10,7 +10,7 @@ import { LoadingService } from '../../services/loading.service';
 })
 export class LoginComponent {
   credentials = { username: '', password: '' };
-
+  selectedRole = 'user';
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -34,6 +34,7 @@ export class LoginComponent {
     if (!this.isValid()) {
       return;
     }
+    console.log(this.selectedRole);
     this.loadingService.setLoadingState(true);
     setTimeout(() => {
       this.loadingService.setLoadingState(false);

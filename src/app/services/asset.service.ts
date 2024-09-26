@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class AssetService {
-  private baseUrl = 'http://localhost:8080/api/assets'; // Backend API
+  private baseUrl = 'http://localhost:4200/'; // Backend API
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -19,29 +19,20 @@ export class AssetService {
     };
   }
 
-  getAssets(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}`, this.getAuthHeaders());
+  requestAllAssetsForAdmin(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/showAsset`, this.getAuthHeaders());
   }
 
-  requestAsset(assetId: number): Observable<any> {
-    return this.http.post(
-      `${this.baseUrl}/request`,
-      { assetId },
+  requestAvailableAssetsForAdmin(): Observable<any> {
+    return this.http.get(
+      `${this.baseUrl}/showAvailableAsset`,
       this.getAuthHeaders()
     );
   }
 
-  getServiceRequests(): Observable<any[]> {
-    return this.http.get<any[]>(
-      `${this.baseUrl}/service-requests`,
-      this.getAuthHeaders()
-    );
-  }
-
-  updateRequestStatus(requestId: number, status: string): Observable<any> {
-    return this.http.patch(
-      `${this.baseUrl}/service-requests/${requestId}`,
-      { status },
+  requestAllocatedAssetsForAdmin(): Observable<any> {
+    return this.http.get(
+      `${this.baseUrl}/showAssetAllocatedToUser`,
       this.getAuthHeaders()
     );
   }
