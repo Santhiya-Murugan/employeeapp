@@ -12,14 +12,8 @@ export class EmployeeDashboardComponent implements OnInit {
   constructor(private assetService: AssetService) {}
 
   ngOnInit() {
-    this.assetService.getAssets().subscribe((data: asset[]) => {
-      this.assets = data;
-    });
-  }
-
-  requestAsset(assetId: number) {
-    this.assetService.requestAsset(assetId).subscribe((response) => {
-      console.log('Asset requested successfully', response);
-    });
+    // this.assetService.getAssets().subscribe((data: asset[]) => {
+    //   this.assets = data;
+    // });
   }
 }

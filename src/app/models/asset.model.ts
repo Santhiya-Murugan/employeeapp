@@ -5,8 +5,8 @@ type asset = {
   assetModel: string;
   assetDescription: string;
   assetValue: string;
-  manufacturingDate: Date;
-  expiryDate: Date;
+  manufacturingDate: string;
+  expiryDate: string;
   imageUrl: string;
   status: Status;
 };

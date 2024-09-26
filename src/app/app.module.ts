@@ -10,6 +10,11 @@ import { EmployeeDashboardComponent } from './components/employee-dashboard/empl
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { HeaderComponent } from './components/header/header.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MaterialTableComponent } from './components/material-table/material-table.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -19,8 +24,18 @@ import { HeaderComponent } from './components/header/header.component';
     AdminDashboardComponent,
     SignupComponent,
     HeaderComponent,
+    MaterialTableComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

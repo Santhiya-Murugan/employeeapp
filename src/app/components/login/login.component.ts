@@ -10,7 +10,7 @@ import { LoadingService } from '../../services/loading.service';
 })
 export class LoginComponent {
   credentials = { username: '', password: '' };
-
+  selectedRole = 'user';
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -34,6 +34,7 @@ export class LoginComponent {
     if (!this.isValid()) {
       return;
     }
+    console.log(this.selectedRole);
     this.loadingService.setLoadingState(true);
     setTimeout(() => {
       this.loadingService.setLoadingState(false);
@@ -47,7 +48,7 @@ export class LoginComponent {
     this.authService.addToLocalStorage('username', this.credentials.username);
     // if (response.role === 'admin') {
     const role = 'admin';
-    if (role !== 'admin') {
+    if (role === 'admin') {
       this.router.navigate(['/admin-dashboard']);
     } else {
       this.router.navigate(['/employee-dashboard']);
