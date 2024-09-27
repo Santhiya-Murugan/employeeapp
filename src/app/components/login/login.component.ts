@@ -40,15 +40,32 @@ export class LoginComponent {
       this.loadingService.setLoadingState(false);
     }, 2000);
 
+    const isAdmin: boolean = this.selectedRole === 'admin';
     // this.loadingService.setLoadingState(true);
-    // this.authService.login(this.credentials).subscribe((response) => {
-    // this.loadingService.setLoadingState(false);
-    // localStorage.setItem('token', response.token);
+    // this.authService.login(this.credentials, isAdmin).subscribe({
+    //   next: (data) => {
+    //     this.loadingService.setLoadingState(false);
+    //     console.log('Data received:', data);
+    //     this.authService.addToLocalStorage('token', data.token);
+    //     this.authService.addToLocalStorage(
+    //       'username',
+    //       this.credentials.username
+    //     );
+    //     if (this.selectedRole === 'admin') {
+    //       this.router.navigate(['/admin-dashboard']);
+    //     } else {
+    //       this.router.navigate(['/employee-dashboard']);
+    //     }
+    //   },
+    //   error: (error) => {
+    //     this.loadingService.setLoadingState(false);
+    //     console.error('Error fetching assets:', error);
+    //   },
+    // });
     this.authService.addToLocalStorage('token', 'empty token');
     this.authService.addToLocalStorage('username', this.credentials.username);
     // if (response.role === 'admin') {
-    const role = 'admin';
-    if (role === 'admin') {
+    if (isAdmin) {
       this.router.navigate(['/admin-dashboard']);
     } else {
       this.router.navigate(['/employee-dashboard']);

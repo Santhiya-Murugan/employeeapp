@@ -1,28 +1,116 @@
 <app-header></app-header>
 <div id="admin-dashboard-container">
   <h2 id="dash-board-title">Admin Dashboard</h2>
-  <div id="actions-container">
-    <button
-      [ngClass]="{ 'active-content': content === 1 }"
-      (click)="onActionClick(1)"
-      class="actions"
-    >
-      Show All Assets
-    </button>
-    <button
-      [ngClass]="{ 'active-content': content === 2 }"
-      (click)="onActionClick(2)"
-      class="actions"
-    >
-      Show Available Assets
-    </button>
-    <button
-      [ngClass]="{ 'active-content': content === 3 }"
-      (click)="onActionClick(3)"
-      class="actions"
-    >
-      Show Allocated Assets
-    </button>
+  <div id="actions-scroll-container">
+    <button id="scroll-left" class="scroll-arrow">&lt;</button>
+    <div id="actions-container" #actionsContainer>
+      <button
+        [ngClass]="{ 'active-content': content === 1 }"
+        (click)="onActionClick(1)"
+        class="actions"
+      >
+        Show All Assets
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 2 }"
+        (click)="onActionClick(2)"
+        class="actions"
+      >
+        Show Available Assets
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 3 }"
+        (click)="onActionClick(3)"
+        class="actions"
+      >
+        Show Allocated Assets
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 4 }"
+        (click)="onActionClick(4)"
+        class="actions"
+      >
+        Add Asset
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 5 }"
+        (click)="onActionClick(5)"
+        class="actions"
+      >
+        Show All
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 6 }"
+        (click)="onActionClick(6)"
+        class="actions"
+      >
+        Show All User
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 7 }"
+        (click)="onActionClick(7)"
+        class="actions"
+      >
+        Find User
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 8 }"
+        (click)="onActionClick(8)"
+        class="actions"
+      >
+        Find Admin by Id
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 9 }"
+        (click)="onActionClick(9)"
+        class="actions"
+      >
+        Asset Allocation Requests
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 10 }"
+        (click)="onActionClick(10)"
+        class="actions"
+      >
+        Asset Allocation Requests
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 11 }"
+        (click)="onActionClick(11)"
+        class="actions"
+      >
+        Asset Allocation Requests
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 12 }"
+        (click)="onActionClick(12)"
+        class="actions"
+      >
+        Asset Allocation Requests
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 13 }"
+        (click)="onActionClick(13)"
+        class="actions"
+      >
+        Asset Allocation Requests
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 14 }"
+        (click)="onActionClick(14)"
+        class="actions"
+      >
+        Asset Allocation Requests
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 15 }"
+        (click)="onActionClick(15)"
+        class="actions"
+      >
+        Asset Allocation Requests
+      </button>
+    </div>
+    <button id="scroll-right" class="scroll-arrow">&gt;</button>
   </div>
 
   <div id="content">
@@ -30,6 +118,7 @@
       <app-material-table
         [dataSource]="dataSourceAll"
         [displayedColumns]="displayedColumns"
+        [columnHeaders]="columnHeaders"
       ></app-material-table>
     </div>
 
@@ -37,6 +126,7 @@
       <app-material-table
         [dataSource]="dataSourceAvailable"
         [displayedColumns]="displayedColumns"
+        [columnHeaders]="columnHeaders"
       ></app-material-table>
     </div>
 
@@ -44,6 +134,7 @@
       <app-material-table
         [dataSource]="dataSourceAllocated"
         [displayedColumns]="displayedColumns"
+        [columnHeaders]="columnHeaders"
       ></app-material-table>
     </div>
   </div>

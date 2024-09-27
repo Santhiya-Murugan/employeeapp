@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { AssetService } from '../../services/asset.service';
-import { asset, Status, AssetCategory } from 'src/app/models/asset.model';
+import {
+  asset,
+  Status,
+  AssetCategory,
+  allocatedAsset,
+} from 'src/app/models/asset.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { LoadingService } from '../../services/loading.service';
 
@@ -9,32 +14,50 @@ import { LoadingService } from '../../services/loading.service';
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css'],
 })
-export class AdminDashboardComponent {
+export class AdminDashboardComponent implements AfterViewInit {
+  @ViewChild('actionsContainer') actionsContainer!: ElementRef;
+
   serviceRequests: any[] = [];
   content: number = 0;
-  dataSourceAll: any;
-  dataSourceAvailable: any;
-  dataSourceAllocated: any;
-  displayedColumns: string[] = [
-    'assetId',
-    'assetName',
-    'assetCategory',
-    'assetModel',
-    'assetDescription',
-    'assetValue',
-    'manufacturingDate',
-    'expiryDate',
-    'status',
-  ];
+  dataSourceAll: MatTableDataSource<asset>;
+  dataSourceAvailable: MatTableDataSource<asset>;
+  dataSourceAllocated: MatTableDataSource<allocatedAsset>;
+  displayedColumns: string[] = [];
   activeBtn: number = 0;
+  columnHeaders: { [key: string]: string } = {};
 
   constructor(
     private assetService: AssetService,
     private loadingService: LoadingService
-  ) {}
+  ) {
+    this.dataSourceAll = new MatTableDataSource<asset>([]);
+    this.dataSourceAvailable = new MatTableDataSource<asset>([]);
+    this.dataSourceAllocated = new MatTableDataSource<allocatedAsset>([]);
+  }
+
+  ngAfterViewInit() {
+    this.setupScrollButtons();
+  }
+
+  setupScrollButtons() {
+    const container = this.actionsContainer.nativeElement;
+    const leftArrow = document.getElementById('scroll-left');
+    const rightArrow = document.getElementById('scroll-right');
+
+    if (leftArrow && rightArrow) {
+      leftArrow.addEventListener('mousedown', () => {
+        container.scrollBy({ left: -800, behavior: 'smooth' });
+      });
+
+      rightArrow.addEventListener('mousedown', () => {
+        container.scrollBy({ left: 800, behavior: 'smooth' });
+      });
+    }
+  }
 
   onActionClick(action: number) {
-    console.log(`clicked ${action}`);
+    if (action === this.activeBtn) return;
+
     this.content = action;
     this.activeBtn = action;
     if (action === 1) {
@@ -45,9 +68,20 @@ export class AdminDashboardComponent {
       this.getAllocatedAssets();
     }
   }
+
   getAllAssets() {
-    // let response = this.assetService.requestAllAssets();
     this.loadingService.setLoadingState(true);
+    // this.assetService.requestAllAssetsForAdmin().subscribe({
+    //   next: (data) => {
+    //     this.loadingService.setLoadingState(false);
+    //     console.log('Data received:', data);
+    //     this.dataSourceAll.data = data;
+    //   },
+    //   error: (error) => {
+    //     this.loadingService.setLoadingState(false);
+    //     console.error('Error fetching assets:', error);
+    //   },
+    // });
     const temp: asset[] = [];
     for (let i = 1; i <= 50; i++) {
       temp.push({
@@ -63,12 +97,36 @@ export class AdminDashboardComponent {
         status: Status.Available,
       });
     }
-    this.dataSourceAll = new MatTableDataSource<asset>(temp);
+    this.columnHeaders = {
+      assetId: 'Asset Id',
+      assetName: 'Asset Name',
+      assetCategory: 'Category',
+      assetModel: 'Asset Model',
+      assetDescription: 'Description',
+      assetValue: 'Value',
+      manufacturingDate: 'Mfg.Date',
+      expiryDate: 'Exp.Date',
+      imageUrl: 'Image',
+      status: 'Status',
+    };
+    this.dataSourceAll.data = temp;
+    this.displayedColumns = this.getKeys(temp[0]);
     this.loadingService.setLoadingState(false);
   }
+
   getAvailableAssets() {
-    // let response = this.assetService.requestAvailableAssets();
     this.loadingService.setLoadingState(true);
+    // this.assetService.requestAvailableAssetsForAdmin().subscribe({
+    //   next: (data) => {
+    //     this.loadingService.setLoadingState(false);
+    //     console.log('Data received:', data);
+    //     this.dataSourceAvailable.data = data;
+    //   },
+    //   error: (error) => {
+    //     this.loadingService.setLoadingState(false);
+    //     console.error('Error fetching assets:', error);
+    //   },
+    // });
     const temp: asset[] = [];
     for (let i = 1; i <= 50; i++) {
       temp.push({
@@ -84,28 +142,63 @@ export class AdminDashboardComponent {
         status: Status.Available,
       });
     }
-    this.dataSourceAvailable = new MatTableDataSource<asset>(temp);
+    this.columnHeaders = {
+      assetId: 'Asset Id',
+      assetName: 'Asset Name',
+      assetCategory: 'Category',
+      assetModel: 'Asset Model',
+      assetDescription: 'Description',
+      assetValue: 'Value',
+      manufacturingDate: 'Mfg.Date',
+      expiryDate: 'Exp.Date',
+      imageUrl: 'Image',
+      status: 'Status',
+    };
+    this.dataSourceAvailable.data = temp;
+    this.displayedColumns = this.getKeys(temp[0]);
     this.loadingService.setLoadingState(false);
   }
+
   getAllocatedAssets() {
-    // let response = this.assetService.requestAllocatedAssets();
     this.loadingService.setLoadingState(true);
-    const temp: asset[] = [];
+    // this.assetService.requestAllocatedAssetsForAdmin().subscribe({
+    //   next: (data) => {
+    //     this.loadingService.setLoadingState(false);
+    //     console.log('Data received:', data);
+    //     this.dataSourceAllocated.data = data;
+    //   },
+    //   error: (error) => {
+    //     this.loadingService.setLoadingState(false);
+    //     console.error('Error fetching assets:', error);
+    //   },
+    // });
+    const temp: allocatedAsset[] = [];
     for (let i = 1; i <= 50; i++) {
       temp.push({
+        requestId: i,
+        adminId: i,
+        userId: i,
+        firstName: `first name ${i}`,
         assetId: i,
-        assetName: `Allocated Asset ${i}`,
-        assetCategory: AssetCategory.Car,
-        assetModel: `Allocated Asset Model ${i}`,
-        assetDescription: `Allocated Asset Description ${i}`,
-        assetValue: `Allocated Asset Value ${i}`,
-        manufacturingDate: `Allocated some date ${i}`,
-        expiryDate: `Allocated some date ${i}`,
-        imageUrl: `Allocated some URL ${i}`,
-        status: Status.Available,
+        assetName: `asset name ${i}`,
+        issuedDate: `issued date ${i}`,
       });
     }
-    this.dataSourceAllocated = new MatTableDataSource<asset>(temp);
+    this.columnHeaders = {
+      requestId: 'Request Id',
+      adminId: 'Admin Id',
+      userId: 'User Id',
+      firstName: 'First Name',
+      assetId: 'Asset Id',
+      assetName: 'Asset Name',
+      issuedDate: 'Issued Date',
+    };
+    this.dataSourceAllocated.data = temp;
+    this.displayedColumns = this.getKeys(temp[0]);
     this.loadingService.setLoadingState(false);
+  }
+
+  private getKeys<T extends object>(obj: T): Array<keyof T> {
+    return Object.keys(obj) as Array<keyof T>;
   }
 }

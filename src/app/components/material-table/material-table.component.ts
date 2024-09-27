@@ -8,17 +8,16 @@ import {
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { asset } from 'src/app/models/asset.model';
-import { AssetCategory, Status } from '../../models/asset.model';
 
 @Component({
   selector: 'app-material-table',
   templateUrl: './material-table.component.html',
   styleUrls: ['./material-table.component.css'],
 })
-export class MaterialTableComponent implements OnInit, AfterViewInit {
-  @Input() dataSource!: MatTableDataSource<asset>;
+export class MaterialTableComponent<T> implements OnInit, AfterViewInit {
+  @Input() dataSource!: MatTableDataSource<T>;
   @Input() displayedColumns: string[] = [];
+  @Input() columnHeaders: { [key: string]: string } = {};
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -41,11 +40,7 @@ export class MaterialTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getAssetCategoryString(category: AssetCategory): string {
-    return AssetCategory[category];
-  }
-
-  getStatusString(status: Status): string {
-    return Status[status];
+  getColumnHeader(column: string): string {
+    return this.columnHeaders[column] || column;
   }
 }

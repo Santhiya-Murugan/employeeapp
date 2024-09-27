@@ -5,12 +5,12 @@
   border: 2px solid #000;
   padding: 20px;
   width: 100vw;
-  /* box-shadow: 10px 10px 0 #000; */
+  box-shadow: 10px 10px 0 #000;
   display: flex;
   top: 0;
   left: 0;
   z-index: 1;
-  /* align-items: center; */
+  align-items: center;
 }
 
 .user-info {
@@ -25,17 +25,17 @@
 }
 
 .logout-btn {
-  /* background-color: #ffcc00; */
+  background-color: #fab1b1;
   border: 2px solid #000;
   padding: 12px;
   cursor: pointer;
-  /* box-shadow: 3px 3px 0 #000; */
+  box-shadow: 3px 3px 0 #000;
   font-size: 16px;
 }
 
-/* .logout-btn:hover {
-  background-color: #ffeb3b;
-} */
+.logout-btn:hover {
+  background-color: #faefef;
+}
 
 @media (max-width: 600px) {
   .header-container {

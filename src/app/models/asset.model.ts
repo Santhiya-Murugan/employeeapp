@@ -10,6 +10,15 @@ type asset = {
   imageUrl: string;
   status: Status;
 };
+type allocatedAsset = {
+  requestId: number;
+  adminId: number;
+  userId: number;
+  firstName: string;
+  assetId: number;
+  assetName: string;
+  issuedDate: string;
+};
 
 enum AssetCategory {
   Laptop,
@@ -23,4 +32,4 @@ enum Status {
   Issued,
 }
 
-export { asset, AssetCategory, Status };
+export { asset, AssetCategory, Status, allocatedAsset };

@@ -1,53 +1,14 @@
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="assetId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Asset ID</th>
-      <td mat-cell *matCellDef="let element">{{ element.assetId }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="assetName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Asset Name</th>
-      <td mat-cell *matCellDef="let element">{{ element.assetName }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="assetCategory">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+    <ng-container
+      *ngFor="let column of displayedColumns"
+      [matColumnDef]="column"
+    >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ getColumnHeader(column) }}
+      </th>
       <td mat-cell *matCellDef="let element">
-        {{ getAssetCategoryString(element.assetCategory) }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="assetModel">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Model</th>
-      <td mat-cell *matCellDef="let element">{{ element.assetModel }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="assetDescription">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
-      <td mat-cell *matCellDef="let element">{{ element.assetDescription }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="assetValue">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Value</th>
-      <td mat-cell *matCellDef="let element">{{ element.assetValue }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="manufacturingDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Mfg. Date</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.manufacturingDate }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="expiryDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Expiry Date</th>
-      <td mat-cell *matCellDef="let element">{{ element.expiryDate }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-      <td mat-cell *matCellDef="let element">
-        {{ getStatusString(element.status) }}
+        {{ element[column] }}
       </td>
     </ng-container>
 
