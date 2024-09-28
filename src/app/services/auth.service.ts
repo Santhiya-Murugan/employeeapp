@@ -12,7 +12,7 @@ export class AuthService {
 
   constructor() {}
 
-  login(credentials: any, isAdmin: boolean): Observable<any> {
+  login(credentials: any, isAdmin: boolean): Observable<string> {
     const url = isAdmin
       ? `${this.baseUrl}admin/login`
       : `${this.baseUrl}user/login`;
@@ -24,12 +24,17 @@ export class AuthService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(credentials),
-      }).then((response) => {
-        if (!response.ok) {
-          return Promise.reject('Login failed');
-        }
-        return response.json();
       })
+        .then((response) => {
+          if (!response.ok) {
+            return Promise.reject('Login failed');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Assuming the token or the string you want is inside `data.token`
+          return data.token as string; // Ensure it returns a string type
+        })
     );
   }
 
