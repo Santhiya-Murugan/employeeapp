@@ -43,6 +43,7 @@ export class LoginComponent {
         this.loadingService.setLoadingState(false);
         console.log('Data received:', data);
         this.authService.addToLocalStorage('token', data);
+        this.authService.addToLocalStorage('username', this.credentials.email);
         if (this.selectedRole === 'admin') {
           this.router.navigate(['/admin-dashboard']);
         } else {
@@ -51,7 +52,7 @@ export class LoginComponent {
       },
       error: (error) => {
         this.loadingService.setLoadingState(false);
-        console.error('Error fetching assets:', error);
+        console.error('Error login in:', error);
         this.error = 'error';
       },
     });
