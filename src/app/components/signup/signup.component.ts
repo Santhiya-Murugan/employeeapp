@@ -21,6 +21,8 @@ export class SignupComponent {
     status: null,
   };
 
+  passwordsMatch: boolean = true;
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -40,25 +42,30 @@ export class SignupComponent {
     } else if (this.credentials.email === '') {
       alert('Please enter email');
       return false;
-    } else if (this.credentials.email === '') {
-      alert('Please enter email');
-      return false;
     } else if (this.credentials.password === '') {
       alert('Please enter password');
       return false;
     } else if (this.credentials.reTypePassword === '') {
       alert('Please enter password');
       return false;
+    } else if (this.credentials.password !== this.credentials.reTypePassword) {
+      alert('Passwords do not match');
+      return false;
     }
     return true;
   }
-  // In your component.ts
+
   validateNumber(event: KeyboardEvent): void {
     const input = event.key;
     // Only allow digits (0-9)
     if (!/^\d+$/.test(input)) {
       event.preventDefault();
     }
+  }
+
+  checkPasswordMatch() {
+    this.passwordsMatch =
+      this.credentials.password === this.credentials.reTypePassword;
   }
 
   register() {
@@ -70,11 +77,6 @@ export class SignupComponent {
     setTimeout(() => {
       this.loadingService.setLoadingState(false);
     }, 2000);
-
-    // this.loadingService.setLoadingState(true);
-    // this.authService.signup(this.credentials).subscribe((response) => {
-    // this.loadingService.setLoadingState(false);
-    //});
     this.router.navigate(['/login']);
   }
 }

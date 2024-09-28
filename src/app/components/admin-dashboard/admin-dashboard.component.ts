@@ -25,6 +25,23 @@ export class AdminDashboardComponent implements AfterViewInit {
   displayedColumns: string[] = [];
   activeBtn: number = 0;
   columnHeaders: { [key: string]: string } = {};
+  assetCategorySelect: string[] = Object.keys(AssetCategory).filter((v) =>
+    isNaN(Number(v))
+  );
+  addAssetsForm = {
+    assetName: '',
+    assetCategory: '',
+    assetModel: '',
+    assetDescription: '',
+    assetValue: '',
+    manufacturingDate: '',
+    expiryDate: '',
+    imageUrl: '',
+  };
+  searchForm = {
+    email: '',
+    id: '',
+  };
 
   constructor(
     private assetService: AssetService,
@@ -53,6 +70,23 @@ export class AdminDashboardComponent implements AfterViewInit {
         container.scrollBy({ left: 800, behavior: 'smooth' });
       });
     }
+  }
+  onInputChange(field: 'id' | 'email') {
+    if (field === 'id') {
+      this.searchForm.email = '';
+    } else {
+      this.searchForm.id = '';
+    }
+  }
+
+  search() {
+    // Implement your search logic here
+    console.log('Searching with:', this.searchForm);
+  }
+
+  clear() {
+    this.searchForm.id = '';
+    this.searchForm.email = '';
   }
 
   onActionClick(action: number) {
@@ -197,7 +231,7 @@ export class AdminDashboardComponent implements AfterViewInit {
     this.displayedColumns = this.getKeys(temp[0]);
     this.loadingService.setLoadingState(false);
   }
-
+  addAsset() {}
   private getKeys<T extends object>(obj: T): Array<keyof T> {
     return Object.keys(obj) as Array<keyof T>;
   }

@@ -9,8 +9,9 @@ import { LoadingService } from '../../services/loading.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  credentials = { username: '', password: '' };
-  selectedRole = 'user';
+  credentials = { email: '', password: '' };
+  selectedRole = 'admin';
+  error = '';
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -19,8 +20,8 @@ export class LoginComponent {
 
   // login field validation
   isValid(): boolean {
-    if (this.credentials.username === '') {
-      alert('Please enter username');
+    if (this.credentials.email === '') {
+      alert('Please enter Email');
       return false;
     } else if (this.credentials.password === '') {
       alert('Please enter password');
@@ -34,42 +35,34 @@ export class LoginComponent {
     if (!this.isValid()) {
       return;
     }
-    console.log(this.selectedRole);
-    this.loadingService.setLoadingState(true);
-    setTimeout(() => {
-      this.loadingService.setLoadingState(false);
-    }, 2000);
 
     const isAdmin: boolean = this.selectedRole === 'admin';
-    // this.loadingService.setLoadingState(true);
-    // this.authService.login(this.credentials, isAdmin).subscribe({
-    //   next: (data) => {
-    //     this.loadingService.setLoadingState(false);
-    //     console.log('Data received:', data);
-    //     this.authService.addToLocalStorage('token', data.token);
-    //     this.authService.addToLocalStorage(
-    //       'username',
-    //       this.credentials.username
-    //     );
-    //     if (this.selectedRole === 'admin') {
-    //       this.router.navigate(['/admin-dashboard']);
-    //     } else {
-    //       this.router.navigate(['/employee-dashboard']);
-    //     }
-    //   },
-    //   error: (error) => {
-    //     this.loadingService.setLoadingState(false);
-    //     console.error('Error fetching assets:', error);
-    //   },
-    // });
-    this.authService.addToLocalStorage('token', 'empty token');
-    this.authService.addToLocalStorage('username', this.credentials.username);
-    // if (response.role === 'admin') {
-    if (isAdmin) {
-      this.router.navigate(['/admin-dashboard']);
-    } else {
-      this.router.navigate(['/employee-dashboard']);
-    }
-    // });
+    this.loadingService.setLoadingState(true);
+    this.authService.login(this.credentials, isAdmin).subscribe({
+      next: (data) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Data received:', data);
+        this.authService.addToLocalStorage('token', data.token);
+        this.authService.addToLocalStorage('username', this.credentials.email);
+        if (this.selectedRole === 'admin') {
+          this.router.navigate(['/admin-dashboard']);
+        } else {
+          this.router.navigate(['/employee-dashboard']);
+        }
+      },
+      error: (error) => {
+        this.loadingService.setLoadingState(false);
+        console.error('Error fetching assets:', error);
+        this.error = 'error';
+      },
+    });
+
+    // this.authService.addToLocalStorage('token', 'empty token');
+    // this.authService.addToLocalStorage('username', this.credentials.email);
+    // if (isAdmin) {
+    //   this.router.navigate(['/admin-dashboard']);
+    // } else {
+    //   this.router.navigate(['/employee-dashboard']);
+    // }
   }
 }

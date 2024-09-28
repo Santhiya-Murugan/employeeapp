@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class AssetService {
-  private baseUrl = 'http://localhost:4200/'; // Backend API
+  private baseUrl = 'http://localhost:8184/'; // Backend API
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

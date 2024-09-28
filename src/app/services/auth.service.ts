@@ -7,16 +7,24 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:4200/'; // Backend API URL
+  private baseUrl = 'http://localhost:8184/'; // Backend API URL
   private jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient) {}
 
   login(credentials: any, isAdmin: boolean): Observable<any> {
-    return this.http.post(`${this.baseUrl}/auth/loginUser`, credentials);
+    if (isAdmin) {
+      return this.http.post(`${this.baseUrl}admin/login`, credentials);
+    } else {
+      return this.http.post(`${this.baseUrl}user/login`, credentials);
+    }
   }
-  signup(userInfo: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/auth/loginUser`, userInfo);
+  signup(userInfo: any, isAdmin: boolean): Observable<any> {
+    if (isAdmin) {
+      return this.http.post(`${this.baseUrl}admin/addAdmin`, userInfo);
+    } else {
+      return this.http.post(`${this.baseUrl}user/addUser`, userInfo);
+    }
   }
 
   isAuthenticated(): boolean {

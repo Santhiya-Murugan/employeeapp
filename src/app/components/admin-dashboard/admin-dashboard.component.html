@@ -37,7 +37,7 @@
         (click)="onActionClick(5)"
         class="actions"
       >
-        Show All
+        Show All Admin
       </button>
       <button
         [ngClass]="{ 'active-content': content === 6 }"
@@ -63,48 +63,6 @@
       <button
         [ngClass]="{ 'active-content': content === 9 }"
         (click)="onActionClick(9)"
-        class="actions"
-      >
-        Asset Allocation Requests
-      </button>
-      <button
-        [ngClass]="{ 'active-content': content === 10 }"
-        (click)="onActionClick(10)"
-        class="actions"
-      >
-        Asset Allocation Requests
-      </button>
-      <button
-        [ngClass]="{ 'active-content': content === 11 }"
-        (click)="onActionClick(11)"
-        class="actions"
-      >
-        Asset Allocation Requests
-      </button>
-      <button
-        [ngClass]="{ 'active-content': content === 12 }"
-        (click)="onActionClick(12)"
-        class="actions"
-      >
-        Asset Allocation Requests
-      </button>
-      <button
-        [ngClass]="{ 'active-content': content === 13 }"
-        (click)="onActionClick(13)"
-        class="actions"
-      >
-        Asset Allocation Requests
-      </button>
-      <button
-        [ngClass]="{ 'active-content': content === 14 }"
-        (click)="onActionClick(14)"
-        class="actions"
-      >
-        Asset Allocation Requests
-      </button>
-      <button
-        [ngClass]="{ 'active-content': content === 15 }"
-        (click)="onActionClick(15)"
         class="actions"
       >
         Asset Allocation Requests
@@ -136,6 +94,150 @@
         [displayedColumns]="displayedColumns"
         [columnHeaders]="columnHeaders"
       ></app-material-table>
+    </div>
+    <div *ngIf="content === 4" id="content-4" class="content">
+      <div class="addasset-container">
+        <form id="addassetForm" (submit)="addAsset()">
+          <div class="input-group-addasset">
+            <label class="addasset-field-labels" for="assetName"
+              >Asset Name<span class="required">*</span></label
+            >
+            <input
+              class="addasset-fields"
+              [(ngModel)]="addAssetsForm.assetName"
+              type="text"
+              id="assetName"
+              name="assetName"
+              required
+            />
+          </div>
+          <div class="input-group-addasset">
+            <label class="addasset-field-labels" for="lastname"
+              >Asset Category<span class="required">*</span></label
+            >
+            <select
+              class="addasset-fields"
+              [(ngModel)]="addAssetsForm.assetCategory"
+              id="assetCategory"
+              name="assetCategory"
+              required
+            >
+              <option>select category</option>
+            </select>
+          </div>
+          <div class="input-group-addasset">
+            <label class="addasset-field-labels" for="assetModel"
+              >Model<span class="required">*</span></label
+            >
+            <input
+              class="addasset-fields"
+              [(ngModel)]="addAssetsForm.assetModel"
+              type="text"
+              id="assetModel"
+              name="assetModel"
+              required
+            />
+          </div>
+          <div class="input-group-addasset">
+            <label class="addasset-field-labels" for="assetDescription"
+              >Description<span class="required">*</span></label
+            >
+            <input
+              class="addasset-fields"
+              [(ngModel)]="addAssetsForm.assetDescription"
+              type="text"
+              id="assetDescription"
+              name="assetDescription"
+              required
+            />
+          </div>
+          <div class="input-group-addasset">
+            <label class="addasset-field-labels" for="assetValue"
+              >Value<span class="required">*</span></label
+            >
+            <input
+              class="addasset-fields"
+              [(ngModel)]="addAssetsForm.assetValue"
+              type="assetValue"
+              id="assetValue"
+              name="assetValue"
+              required
+            />
+          </div>
+          <div class="input-group-addasset">
+            <label class="addasset-field-labels" for="manufacturingDate"
+              >Manufacturing Date<span class="required">*</span></label
+            >
+            <input
+              class="addasset-fields"
+              [(ngModel)]="addAssetsForm.manufacturingDate"
+              type="date"
+              id="manufacturingDate"
+              name="manufacturingDate"
+              required
+            />
+          </div>
+          <div class="input-group-addasset">
+            <label class="addasset-field-labels" for="expiryDate"
+              >Expiring Date<span class="required">*</span></label
+            >
+            <input
+              class="addasset-fields"
+              [(ngModel)]="addAssetsForm.expiryDate"
+              type="date"
+              id="expiryDate"
+              name="expiryDate"
+              required
+            />
+          </div>
+          <div class="input-group-addasset">
+            <label class="addasset-field-labels" for="imageUrl"
+              >Image Url<span class="required">*</span></label
+            >
+            <input
+              class="addasset-fields"
+              [(ngModel)]="addAssetsForm.imageUrl"
+              type="text"
+              id="imageUrl"
+              name="imageUrl"
+              required
+            />
+          </div>
+          <button id="addasset-btn" type="submit">Save Asset</button>
+        </form>
+      </div>
+    </div>
+    <div *ngIf="content === 7" id="content-8" class="content">
+      <div style="width: 100%; height: 100%">
+        <form class="search-bar-container">
+          <input
+            [(ngModel)]="searchForm.id"
+            type="text"
+            class="addasset-fields"
+            id="searchbyid"
+            name="searchbyid"
+            placeholder="User Id"
+            [disabled]="searchForm.email.length > 0"
+            (input)="onInputChange('id')"
+          />
+          <input
+            [(ngModel)]="searchForm.email"
+            type="text"
+            class="addasset-fields"
+            id="searchbyemail"
+            name="searchbyemail"
+            placeholder="User Email"
+            [disabled]="searchForm.id.length > 0"
+            (input)="onInputChange('email')"
+          />
+          <button mat-icon-button (click)="search()">
+            <mat-icon>search</mat-icon>
+          </button>
+          <button mat-icon-button (click)="clear()">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

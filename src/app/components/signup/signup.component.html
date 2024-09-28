@@ -73,6 +73,7 @@
         type="password"
         id="password"
         name="password"
+        (input)="checkPasswordMatch()"
         required
       />
     </div>
@@ -86,8 +87,15 @@
         type="password"
         id="reTypePassword"
         name="reTypePassword"
+        (input)="checkPasswordMatch()"
         required
       />
+      <div
+        *ngIf="credentials.reTypePassword"
+        [ngClass]="{ match: passwordsMatch, 'no-match': !passwordsMatch }"
+      >
+        {{ passwordsMatch ? "Passwords match" : "Passwords do not match" }}
+      </div>
     </div>
     <button id="register-btn" type="submit">Sign Up</button>
     <p>Already have an account? <a routerLink="/login">Sign In</a></p>
