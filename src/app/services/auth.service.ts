@@ -24,17 +24,12 @@ export class AuthService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(credentials),
+      }).then((response) => {
+        if (!response.ok) {
+          return Promise.reject('Login failed');
+        }
+        return response.text();
       })
-        .then((response) => {
-          if (!response.ok) {
-            return Promise.reject('Login failed');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          // Assuming the token or the string you want is inside `data.token`
-          return data.token as string; // Ensure it returns a string type
-        })
     );
   }
 
