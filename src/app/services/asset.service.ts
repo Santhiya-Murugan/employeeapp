@@ -67,4 +67,21 @@ export class AssetService {
       })
     );
   }
+
+  addAssetForAdmin(assetInfor: any): Observable<any> {
+    const url = `${this.baseUrl}admin/addAdmin`;
+    const headers = this.getAuthHeaders();
+    return from(
+      fetch(url, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(assetInfor),
+      }).then((response) => {
+        if (!response.ok) {
+          return Promise.reject('Api fetch failed');
+        }
+        return response.text();
+      })
+    );
+  }
 }

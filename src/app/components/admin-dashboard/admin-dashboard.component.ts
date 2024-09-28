@@ -124,28 +124,12 @@ export class AdminDashboardComponent implements AfterViewInit {
         };
         const temp: asset = data[0];
         this.displayedColumns = this.getKeys(temp);
-        this.loadingService.setLoadingState(false);
       },
       error: (error) => {
         this.loadingService.setLoadingState(false);
         console.error('Error fetching assets:', error);
       },
     });
-    // const temp: asset[] = [];
-    // for (let i = 1; i <= 50; i++) {
-    //   temp.push({
-    //     assetId: i,
-    //     assetName: `All Asset ${i}`,
-    //     assetCategory: AssetCategory.Car,
-    //     assetModel: `All Asset Model ${i}`,
-    //     assetDescription: `All Asset Description ${i}`,
-    //     assetValue: `All Asset Value ${i}`,
-    //     manufacturingDate: `All some date ${i}`,
-    //     expiryDate: `All some date ${i}`,
-    //     imageUrl: `All some URL ${i}`,
-    //     status: Status.Available,
-    //   });
-    // }
   }
 
   getAvailableAssets() {
@@ -169,28 +153,12 @@ export class AdminDashboardComponent implements AfterViewInit {
         };
         const temp: asset = data[0];
         this.displayedColumns = this.getKeys(temp);
-        this.loadingService.setLoadingState(false);
       },
       error: (error) => {
         this.loadingService.setLoadingState(false);
         console.error('Error fetching assets:', error);
       },
     });
-    // const temp: asset[] = [];
-    // for (let i = 1; i <= 50; i++) {
-    //   temp.push({
-    //     assetId: i,
-    //     assetName: `Available Asset ${i}`,
-    //     assetCategory: AssetCategory.Car,
-    //     assetModel: `Available Asset Model ${i}`,
-    //     assetDescription: `Available Asset Description ${i}`,
-    //     assetValue: `Available Asset Value ${i}`,
-    //     manufacturingDate: `Available some date ${i}`,
-    //     expiryDate: `Available some date ${i}`,
-    //     imageUrl: `Available some URL ${i}`,
-    //     status: Status.Available,
-    //   });
-    // }
   }
 
   getAllocatedAssets() {
@@ -211,27 +179,31 @@ export class AdminDashboardComponent implements AfterViewInit {
         };
         const temp: allocatedAsset = data[0];
         this.displayedColumns = this.getKeys(temp);
-        this.loadingService.setLoadingState(false);
       },
       error: (error) => {
         this.loadingService.setLoadingState(false);
         console.error('Error fetching assets:', error);
       },
     });
-    const temp: allocatedAsset[] = [];
-    for (let i = 1; i <= 50; i++) {
-      temp.push({
-        requestId: i,
-        adminId: i,
-        userId: i,
-        firstName: `first name ${i}`,
-        assetId: i,
-        assetName: `asset name ${i}`,
-        issuedDate: `issued date ${i}`,
-      });
-    }
   }
-  addAsset() {}
+  addAsset() {
+    this.loadingService.setLoadingState(true);
+    this.assetService.addAssetForAdmin(this.addAssetsForm).subscribe({
+      next: (data) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Data received:', data);
+        if (data !== '') {
+          alert(data);
+        } else {
+          alert('Failed to insert');
+        }
+      },
+      error: (error) => {
+        this.loadingService.setLoadingState(false);
+        console.error('Error fetching assets:', error);
+      },
+    });
+  }
   private getKeys<T extends object>(obj: T): Array<keyof T> {
     return Object.keys(obj) as Array<keyof T>;
   }
