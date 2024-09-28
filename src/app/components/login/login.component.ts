@@ -40,6 +40,7 @@ export class LoginComponent {
     this.loadingService.setLoadingState(true);
     this.authService.login(this.credentials, isAdmin).subscribe({
       next: (data) => {
+        alert(`Generated JWT: ${data}`);
         this.loadingService.setLoadingState(false);
         console.log('Data received:', data);
         this.authService.addToLocalStorage('token', data);
@@ -56,13 +57,5 @@ export class LoginComponent {
         this.error = 'error';
       },
     });
-
-    // this.authService.addToLocalStorage('token', 'empty token');
-    // this.authService.addToLocalStorage('username', this.credentials.email);
-    // if (isAdmin) {
-    //   this.router.navigate(['/admin-dashboard']);
-    // } else {
-    //   this.router.navigate(['/employee-dashboard']);
-    // }
   }
 }

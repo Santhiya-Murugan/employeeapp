@@ -18,7 +18,7 @@ export class AssetService {
   }
 
   requestAllAssetsForAdmin(): Observable<any> {
-    const url = `${this.baseUrl}/showAsset`;
+    const url = `${this.baseUrl}admin/showAsset`;
     const headers = this.getAuthHeaders();
 
     return from(
@@ -52,7 +52,7 @@ export class AssetService {
   }
 
   requestAllocatedAssetsForAdmin(): Observable<any> {
-    const url = `${this.baseUrl}/showAssetAllocatedToUser`;
+    const url = `${this.baseUrl}admin/showAssetAllocatedToUser`;
     const headers = this.getAuthHeaders();
 
     return from(
