@@ -105,107 +105,119 @@ export class AdminDashboardComponent implements AfterViewInit {
 
   getAllAssets() {
     this.loadingService.setLoadingState(true);
-    // this.assetService.requestAllAssetsForAdmin().subscribe({
-    //   next: (data) => {
-    //     this.loadingService.setLoadingState(false);
-    //     console.log('Data received:', data);
-    //     this.dataSourceAll.data = data;
-    //   },
-    //   error: (error) => {
-    //     this.loadingService.setLoadingState(false);
-    //     console.error('Error fetching assets:', error);
-    //   },
-    // });
-    const temp: asset[] = [];
-    for (let i = 1; i <= 50; i++) {
-      temp.push({
-        assetId: i,
-        assetName: `All Asset ${i}`,
-        assetCategory: AssetCategory.Car,
-        assetModel: `All Asset Model ${i}`,
-        assetDescription: `All Asset Description ${i}`,
-        assetValue: `All Asset Value ${i}`,
-        manufacturingDate: `All some date ${i}`,
-        expiryDate: `All some date ${i}`,
-        imageUrl: `All some URL ${i}`,
-        status: Status.Available,
-      });
-    }
-    this.columnHeaders = {
-      assetId: 'Asset Id',
-      assetName: 'Asset Name',
-      assetCategory: 'Category',
-      assetModel: 'Asset Model',
-      assetDescription: 'Description',
-      assetValue: 'Value',
-      manufacturingDate: 'Mfg.Date',
-      expiryDate: 'Exp.Date',
-      imageUrl: 'Image',
-      status: 'Status',
-    };
-    this.dataSourceAll.data = temp;
-    this.displayedColumns = this.getKeys(temp[0]);
-    this.loadingService.setLoadingState(false);
+    this.assetService.requestAllAssetsForAdmin().subscribe({
+      next: (data) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Data received:', data);
+        this.dataSourceAll.data = data;
+        this.columnHeaders = {
+          assetId: 'Asset Id',
+          assetName: 'Asset Name',
+          assetCategory: 'Category',
+          assetModel: 'Asset Model',
+          assetDescription: 'Description',
+          assetValue: 'Value',
+          manufacturingDate: 'Mfg.Date',
+          expiryDate: 'Exp.Date',
+          imageUrl: 'Image',
+          status: 'Status',
+        };
+        const temp: asset = data[0];
+        this.displayedColumns = this.getKeys(temp);
+        this.loadingService.setLoadingState(false);
+      },
+      error: (error) => {
+        this.loadingService.setLoadingState(false);
+        console.error('Error fetching assets:', error);
+      },
+    });
+    // const temp: asset[] = [];
+    // for (let i = 1; i <= 50; i++) {
+    //   temp.push({
+    //     assetId: i,
+    //     assetName: `All Asset ${i}`,
+    //     assetCategory: AssetCategory.Car,
+    //     assetModel: `All Asset Model ${i}`,
+    //     assetDescription: `All Asset Description ${i}`,
+    //     assetValue: `All Asset Value ${i}`,
+    //     manufacturingDate: `All some date ${i}`,
+    //     expiryDate: `All some date ${i}`,
+    //     imageUrl: `All some URL ${i}`,
+    //     status: Status.Available,
+    //   });
+    // }
   }
 
   getAvailableAssets() {
     this.loadingService.setLoadingState(true);
-    // this.assetService.requestAvailableAssetsForAdmin().subscribe({
-    //   next: (data) => {
-    //     this.loadingService.setLoadingState(false);
-    //     console.log('Data received:', data);
-    //     this.dataSourceAvailable.data = data;
-    //   },
-    //   error: (error) => {
-    //     this.loadingService.setLoadingState(false);
-    //     console.error('Error fetching assets:', error);
-    //   },
-    // });
-    const temp: asset[] = [];
-    for (let i = 1; i <= 50; i++) {
-      temp.push({
-        assetId: i,
-        assetName: `Available Asset ${i}`,
-        assetCategory: AssetCategory.Car,
-        assetModel: `Available Asset Model ${i}`,
-        assetDescription: `Available Asset Description ${i}`,
-        assetValue: `Available Asset Value ${i}`,
-        manufacturingDate: `Available some date ${i}`,
-        expiryDate: `Available some date ${i}`,
-        imageUrl: `Available some URL ${i}`,
-        status: Status.Available,
-      });
-    }
-    this.columnHeaders = {
-      assetId: 'Asset Id',
-      assetName: 'Asset Name',
-      assetCategory: 'Category',
-      assetModel: 'Asset Model',
-      assetDescription: 'Description',
-      assetValue: 'Value',
-      manufacturingDate: 'Mfg.Date',
-      expiryDate: 'Exp.Date',
-      imageUrl: 'Image',
-      status: 'Status',
-    };
-    this.dataSourceAvailable.data = temp;
-    this.displayedColumns = this.getKeys(temp[0]);
-    this.loadingService.setLoadingState(false);
+    this.assetService.requestAvailableAssetsForAdmin().subscribe({
+      next: (data) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Data received:', data);
+        this.dataSourceAvailable.data = data;
+        this.columnHeaders = {
+          assetId: 'Asset Id',
+          assetName: 'Asset Name',
+          assetCategory: 'Category',
+          assetModel: 'Asset Model',
+          assetDescription: 'Description',
+          assetValue: 'Value',
+          manufacturingDate: 'Mfg.Date',
+          expiryDate: 'Exp.Date',
+          imageUrl: 'Image',
+          status: 'Status',
+        };
+        const temp: asset = data[0];
+        this.displayedColumns = this.getKeys(temp);
+        this.loadingService.setLoadingState(false);
+      },
+      error: (error) => {
+        this.loadingService.setLoadingState(false);
+        console.error('Error fetching assets:', error);
+      },
+    });
+    // const temp: asset[] = [];
+    // for (let i = 1; i <= 50; i++) {
+    //   temp.push({
+    //     assetId: i,
+    //     assetName: `Available Asset ${i}`,
+    //     assetCategory: AssetCategory.Car,
+    //     assetModel: `Available Asset Model ${i}`,
+    //     assetDescription: `Available Asset Description ${i}`,
+    //     assetValue: `Available Asset Value ${i}`,
+    //     manufacturingDate: `Available some date ${i}`,
+    //     expiryDate: `Available some date ${i}`,
+    //     imageUrl: `Available some URL ${i}`,
+    //     status: Status.Available,
+    //   });
+    // }
   }
 
   getAllocatedAssets() {
     this.loadingService.setLoadingState(true);
-    // this.assetService.requestAllocatedAssetsForAdmin().subscribe({
-    //   next: (data) => {
-    //     this.loadingService.setLoadingState(false);
-    //     console.log('Data received:', data);
-    //     this.dataSourceAllocated.data = data;
-    //   },
-    //   error: (error) => {
-    //     this.loadingService.setLoadingState(false);
-    //     console.error('Error fetching assets:', error);
-    //   },
-    // });
+    this.assetService.requestAllocatedAssetsForAdmin().subscribe({
+      next: (data) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Data received:', data);
+        this.dataSourceAllocated.data = data;
+        this.columnHeaders = {
+          requestId: 'Request Id',
+          adminId: 'Admin Id',
+          userId: 'User Id',
+          firstName: 'First Name',
+          assetId: 'Asset Id',
+          assetName: 'Asset Name',
+          issuedDate: 'Issued Date',
+        };
+        const temp: allocatedAsset = data[0];
+        this.displayedColumns = this.getKeys(temp);
+        this.loadingService.setLoadingState(false);
+      },
+      error: (error) => {
+        this.loadingService.setLoadingState(false);
+        console.error('Error fetching assets:', error);
+      },
+    });
     const temp: allocatedAsset[] = [];
     for (let i = 1; i <= 50; i++) {
       temp.push({
@@ -218,18 +230,6 @@ export class AdminDashboardComponent implements AfterViewInit {
         issuedDate: `issued date ${i}`,
       });
     }
-    this.columnHeaders = {
-      requestId: 'Request Id',
-      adminId: 'Admin Id',
-      userId: 'User Id',
-      firstName: 'First Name',
-      assetId: 'Asset Id',
-      assetName: 'Asset Name',
-      issuedDate: 'Issued Date',
-    };
-    this.dataSourceAllocated.data = temp;
-    this.displayedColumns = this.getKeys(temp[0]);
-    this.loadingService.setLoadingState(false);
   }
   addAsset() {}
   private getKeys<T extends object>(obj: T): Array<keyof T> {

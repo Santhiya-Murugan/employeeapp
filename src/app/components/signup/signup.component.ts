@@ -22,6 +22,7 @@ export class SignupComponent {
   };
 
   passwordsMatch: boolean = true;
+  selectedRole = 'user';
 
   constructor(
     private authService: AuthService,
@@ -74,9 +75,17 @@ export class SignupComponent {
     }
 
     this.loadingService.setLoadingState(true);
-    setTimeout(() => {
-      this.loadingService.setLoadingState(false);
-    }, 2000);
-    this.router.navigate(['/login']);
+    const isAdmin: boolean = this.selectedRole == 'admin';
+    this.authService.signup(this.credentials, isAdmin).subscribe({
+      next: (data) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Data received:', data);
+        if (data !== null) this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        this.loadingService.setLoadingState(false);
+        console.error('Error fetching assets:', error);
+      },
+    });
   }
 }

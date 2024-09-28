@@ -42,8 +42,7 @@ export class LoginComponent {
       next: (data) => {
         this.loadingService.setLoadingState(false);
         console.log('Data received:', data);
-        this.authService.addToLocalStorage('token', data.token);
-        this.authService.addToLocalStorage('username', this.credentials.email);
+        this.authService.addToLocalStorage('token', data);
         if (this.selectedRole === 'admin') {
           this.router.navigate(['/admin-dashboard']);
         } else {

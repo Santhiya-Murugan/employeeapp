@@ -54,7 +54,7 @@ export class AuthService {
     return {
       headers: new HttpHeaders({
         Authorization: token ? `Bearer ${token}` : '',
-        // Only add Authorization header if the token exists
+        'Content-Type': 'application/json',
       }),
     };
   }
