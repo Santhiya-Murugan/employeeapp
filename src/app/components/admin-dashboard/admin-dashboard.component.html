@@ -122,7 +122,10 @@
               name="assetCategory"
               required
             >
-              <option>select category</option>
+              <option>Laptop</option>
+              <option>Furniture</option>
+              <option>Gadgets</option>
+              <option>Car</option>
             </select>
           </div>
           <div class="input-group-addasset">
@@ -156,9 +159,9 @@
               >Value<span class="required">*</span></label
             >
             <input
+              type="number"
               class="addasset-fields"
               [(ngModel)]="addAssetsForm.assetValue"
-              type="assetValue"
               id="assetValue"
               name="assetValue"
               required
@@ -174,6 +177,7 @@
               type="date"
               id="manufacturingDate"
               name="manufacturingDate"
+              [max]="maxDate"
               required
             />
           </div>
@@ -207,37 +211,160 @@
         </form>
       </div>
     </div>
-    <div *ngIf="content === 7" id="content-8" class="content">
+    <div *ngIf="content === 5" id="content-5" class="content">
+      <app-material-table
+        [dataSource]="adminResult"
+        [displayedColumns]="[
+          'adminId',
+          'firstName',
+          'lastName',
+          'phoneno',
+          'email',
+          'status'
+        ]"
+        [columnHeaders]="{
+          'adminId':'Id',
+          'firstName':'First Name',
+          'lastName':'Last Name',
+          'phoneno':'Phone Number',
+          'email':'Email',
+          'status':'Status',
+        }"
+      ></app-material-table>
+    </div>
+    <div *ngIf="content === 6" id="content-6" class="content">
+      <app-material-table
+        [dataSource]="searchResult"
+        [displayedColumns]="[
+          'userId',
+          'firstName',
+          'lastName',
+          'phoneno',
+          'email',
+          'status'
+        ]"
+        [columnHeaders]="{
+            'userId':'Id',
+            'firstName':'First Name',
+            'lastName':'Last Name',
+            'phoneno':'Phone Number',
+            'email':'Email Id',
+            'status':'Id',
+            }"
+      ></app-material-table>
+    </div>
+    <div *ngIf="content === 7" id="content-7" class="content">
       <div style="width: 100%; height: 100%">
         <form class="search-bar-container">
           <input
-            [(ngModel)]="searchForm.id"
+            [(ngModel)]="searchFormUser.id"
             type="text"
             class="addasset-fields"
             id="searchbyid"
             name="searchbyid"
             placeholder="User Id"
-            [disabled]="searchForm.email.length > 0"
+            [disabled]="searchFormUser.email.length > 0"
             (input)="onInputChange('id')"
           />
           <input
-            [(ngModel)]="searchForm.email"
+            [(ngModel)]="searchFormUser.email"
             type="text"
             class="addasset-fields"
             id="searchbyemail"
             name="searchbyemail"
             placeholder="User Email"
-            [disabled]="searchForm.id.length > 0"
+            [disabled]="searchFormUser.id.length > 0"
             (input)="onInputChange('email')"
           />
-          <button mat-icon-button (click)="search()">
+          <button
+            style="background-color: #ffcc00"
+            mat-icon-button
+            (click)="search()"
+          >
             <mat-icon>search</mat-icon>
           </button>
-          <button mat-icon-button (click)="clear()">
+          <button
+            style="background-color: #ffcc00"
+            mat-icon-button
+            (click)="clear()"
+          >
             <mat-icon>clear</mat-icon>
           </button>
         </form>
+        <app-material-table
+          [dataSource]="searchResult"
+          [displayedColumns]="[
+            'userId',
+            'firstName',
+            'lastName',
+            'phoneno',
+            'email',
+            'status'
+          ]"
+          [columnHeaders]="{
+            'userId':'Id',
+            'firstName':'First Name',
+            'lastName':'Last Name',
+            'phoneno':'Phone Number',
+            'email':'Email Id',
+            'status':'Id',
+            }"
+        ></app-material-table>
       </div>
+    </div>
+    <div *ngIf="content === 8" id="content-8" class="content">
+      <div style="width: 100%; height: 100%">
+        <form class="search-bar-container">
+          <input
+            [(ngModel)]="searchFormAdmin.id"
+            type="text"
+            class="addasset-fields"
+            id="searchbyid"
+            name="searchbyid"
+            placeholder="User Id"
+          />
+          <button
+            style="background-color: #ffcc00"
+            mat-icon-button
+            (click)="searchAdmin()"
+          >
+            <mat-icon>search</mat-icon>
+          </button>
+          <button
+            style="background-color: #ffcc00"
+            mat-icon-button
+            (click)="clear()"
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
+        </form>
+        <app-material-table
+          [dataSource]="adminResult"
+          [displayedColumns]="[
+            'adminId',
+            'firstName',
+            'lastName',
+            'phoneno',
+            'email',
+            'status'
+          ]"
+          [columnHeaders]="{
+          'adminId':'Id',
+          'firstName':'First Name',
+          'lastName':'Last Name',
+          'phoneno':'Phone Number',
+          'email':'Email',
+          'status':'Status',
+        }"
+        ></app-material-table>
+      </div>
+    </div>
+    <div *ngIf="content === 9" id="content-9" class="content">
+      <app-material-table
+        [dataSource]="dataSourceAllocated"
+        [displayedColumns]="displayedColumns"
+        [columnHeaders]="columnHeaders"
+      ></app-material-table>
     </div>
   </div>
 </div>

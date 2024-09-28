@@ -22,7 +22,7 @@ export class SignupComponent {
   };
 
   passwordsMatch: boolean = true;
-  selectedRole = 'user';
+  selectedRole = 'admin';
 
   constructor(
     private authService: AuthService,

@@ -84,4 +84,100 @@ export class AssetService {
       })
     );
   }
+
+  findUserById(id: string): Observable<any> {
+    const url = `${this.baseUrl}admin/findUserById/${id}`;
+
+    return from(
+      fetch(url, {
+        method: 'GET',
+        headers: this.getAuthHeaders(),
+      }).then((response) => {
+        if (!response.ok) {
+          return Promise.reject('Signup failed');
+        }
+        return response.json();
+      })
+    );
+  }
+
+  findUserByEmail(email: string): Observable<any> {
+    const url = `${this.baseUrl}admin/findUserByEmail/${email}`;
+
+    return from(
+      fetch(url, {
+        method: 'GET',
+        headers: this.getAuthHeaders(),
+      }).then((response) => {
+        if (!response.ok) {
+          return Promise.reject('Signup failed');
+        }
+        return response.json();
+      })
+    );
+  }
+
+  getAllAdmins(): Observable<any> {
+    const url = `${this.baseUrl}admin/showAll`;
+
+    return from(
+      fetch(url, {
+        method: 'GET',
+        headers: this.getAuthHeaders(),
+      }).then((response) => {
+        if (!response.ok) {
+          return Promise.reject('Signup failed');
+        }
+        return response.json();
+      })
+    );
+  }
+
+  getAllUsers(): Observable<any> {
+    const url = `${this.baseUrl}admin/showAllUsers`;
+
+    return from(
+      fetch(url, {
+        method: 'GET',
+        headers: this.getAuthHeaders(),
+      }).then((response) => {
+        if (!response.ok) {
+          return Promise.reject('Signup failed');
+        }
+        return response.json();
+      })
+    );
+  }
+
+  findAdminById(id: string): Observable<any> {
+    const url = `${this.baseUrl}admin/findAdminById/${id}`;
+
+    return from(
+      fetch(url, {
+        method: 'GET',
+        headers: this.getAuthHeaders(),
+      }).then((response) => {
+        if (!response.ok) {
+          return Promise.reject('Signup failed');
+        }
+        return response.json();
+      })
+    );
+  }
+
+  getAllAssetAllocationRequest(): Observable<any> {
+    const url = `${this.baseUrl}admin/showAssetAllocationRequest`;
+
+    return from(
+      fetch(url, {
+        method: 'GET',
+        headers: this.getAuthHeaders(),
+      }).then((response) => {
+        if (!response.ok) {
+          return Promise.reject('Signup failed');
+        }
+        return response.json();
+      })
+    );
+  }
 }

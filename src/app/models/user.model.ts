@@ -1,6 +1,15 @@
 import { Status } from './asset.model';
-type user = {
+type admin = {
   adminId: number;
+  firstName: string;
+  lastName: string;
+  phoneno: string;
+  email: string;
+  password: string | null;
+  status: Status | null;
+};
+type user = {
+  userId: number;
   firstName: string;
   lastName: string;
   phoneno: string;
@@ -9,4 +18,4 @@ type user = {
   status: Status | null;
 };
 
-export { user };
+export { admin, user };

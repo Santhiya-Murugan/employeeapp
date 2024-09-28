@@ -144,6 +144,8 @@
   display: flex;
   flex-direction: row;
   gap: 20px;
+  width: 80vw;
+  margin: 0px auto;
 }
 @media (max-width: 600px) {
   .addasset-container {

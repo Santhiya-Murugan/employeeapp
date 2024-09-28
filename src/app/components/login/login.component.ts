@@ -57,5 +57,8 @@ export class LoginComponent {
         this.error = 'error';
       },
     });
+    // this.authService.addToLocalStorage('token', 'test');
+    // this.authService.addToLocalStorage('username', this.credentials.email);
+    // this.router.navigate(['/admin-dashboard']);
   }
 }

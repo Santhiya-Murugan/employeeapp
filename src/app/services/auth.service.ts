@@ -78,13 +78,10 @@ export class AuthService {
     localStorage.removeItem('username');
   }
 
-  getAuthHeaders(): { headers: HttpHeaders } {
-    const token = this.getToken();
+  private getAuthHeaders(): { [key: string]: string } {
     return {
-      headers: new HttpHeaders({
-        Authorization: token ? `Bearer ${token}` : '',
-        'Content-Type': 'application/json',
-      }),
+      Authorization: `Bearer ${this.getToken()}`,
+      'Content-Type': 'application/json',
     };
   }
 }
