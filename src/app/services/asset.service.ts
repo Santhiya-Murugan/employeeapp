@@ -35,7 +35,7 @@ export class AssetService {
   }
 
   requestAvailableAssetsForAdmin(): Observable<any> {
-    const url = `${this.baseUrl}/showAvailableAsset`;
+    const url = `${this.baseUrl}admin/showAvailableAsset`;
     const headers = this.getAuthHeaders();
 
     return from(
