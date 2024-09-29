@@ -67,6 +67,13 @@
       >
         Asset Allocation Requests
       </button>
+      <button
+        [ngClass]="{ 'active-content': content === 10 }"
+        (click)="onActionClick(10)"
+        class="actions"
+      >
+        Show Asset Service Request
+      </button>
     </div>
     <button id="scroll-right" class="scroll-arrow">&gt;</button>
   </div>
@@ -220,6 +227,7 @@
           'lastName',
           'phoneno',
           'email',
+          'address',
           'status'
         ]"
         [columnHeaders]="{
@@ -228,6 +236,7 @@
           'lastName':'Last Name',
           'phoneno':'Phone Number',
           'email':'Email',
+          'address':'Address',
           'status':'Status',
         }"
       ></app-material-table>

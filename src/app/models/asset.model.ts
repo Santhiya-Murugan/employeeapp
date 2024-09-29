@@ -19,6 +19,15 @@ type allocatedAsset = {
   assetName: string;
   issuedDate: string;
 };
+type assetSeriveRequest = {
+  serviceId: number;
+  userId: number;
+  firstName: string;
+  assetId: number;
+  assetName: string;
+  serviceType: string;
+  status: string;
+};
 
 enum AssetCategory {
   Laptop,
@@ -32,4 +41,4 @@ enum Status {
   Issued,
 }
 
-export { asset, AssetCategory, Status, allocatedAsset };
+export { asset, AssetCategory, Status, allocatedAsset, assetSeriveRequest };

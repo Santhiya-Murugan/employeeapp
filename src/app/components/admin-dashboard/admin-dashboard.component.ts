@@ -32,6 +32,7 @@ export class AdminDashboardComponent implements AfterViewInit {
     isNaN(Number(v))
   );
   addAssetsForm = {
+    assetId: 0,
     assetName: '',
     assetCategory: '',
     assetModel: '',
@@ -40,6 +41,7 @@ export class AdminDashboardComponent implements AfterViewInit {
     manufacturingDate: '',
     expiryDate: '',
     imageUrl: '',
+    status: 'Available',
   };
   searchFormUser = {
     email: '',
@@ -99,7 +101,7 @@ export class AdminDashboardComponent implements AfterViewInit {
 
     if (this.searchFormUser.email !== '') {
       this.loadingService.setLoadingState(true);
-      this.assetService.findUserById(this.searchFormUser.id).subscribe({
+      this.assetService.findUserByEmail(this.searchFormUser.id).subscribe({
         next: (data) => {
           this.loadingService.setLoadingState(false);
           console.log('Data received:', data);
@@ -114,7 +116,7 @@ export class AdminDashboardComponent implements AfterViewInit {
     }
     if (this.searchFormUser.id !== '') {
       this.loadingService.setLoadingState(true);
-      this.assetService.findUserByEmail(this.searchFormUser.email).subscribe({
+      this.assetService.findUserById(this.searchFormUser.email).subscribe({
         next: (data) => {
           this.loadingService.setLoadingState(false);
           console.log('Data received:', data);
@@ -306,6 +308,7 @@ export class AdminDashboardComponent implements AfterViewInit {
         if (data !== '') {
           alert(data);
           this.addAssetsForm = {
+            assetId: 0,
             assetName: '',
             assetCategory: '',
             assetModel: '',
@@ -314,6 +317,7 @@ export class AdminDashboardComponent implements AfterViewInit {
             manufacturingDate: '',
             expiryDate: '',
             imageUrl: '',
+            status: 'Available',
           };
         } else {
           alert('Failed to insert');

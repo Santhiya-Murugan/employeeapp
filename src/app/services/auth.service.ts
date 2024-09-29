@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
-import { Observable, from } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
@@ -10,27 +10,14 @@ export class AuthService {
   private baseUrl = 'http://localhost:8184/'; // Backend API URL
   private jwtHelper = new JwtHelperService();
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   login(credentials: any, isAdmin: boolean): Observable<string> {
     const url = isAdmin
       ? `${this.baseUrl}admin/login`
       : `${this.baseUrl}user/login`;
 
-    return from(
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-      }).then((response) => {
-        if (!response.ok) {
-          return Promise.reject('Login failed');
-        }
-        return response.text();
-      })
-    );
+    return this.http.post(url, credentials, { responseType: 'text' });
   }
 
   signup(userInfo: any, isAdmin: boolean): Observable<any> {
@@ -38,35 +25,21 @@ export class AuthService {
       ? `${this.baseUrl}admin/addAdmin`
       : `${this.baseUrl}user/addUser`;
 
-    return from(
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userInfo),
-      }).then((response) => {
-        if (!response.ok) {
-          return Promise.reject('Signup failed');
-        }
-        return response.json();
-      })
-    );
+    return this.http.post(url, userInfo);
   }
 
   isAuthenticated(): boolean {
     const token = this.getToken();
-    // return true;
-    return !this.jwtHelper.isTokenExpired(token);
-    // uncomment when API is completed
+    // return !this.jwtHelper.isTokenExpired(token);
+    return true;
   }
 
-  getToken(): string | undefined {
-    return localStorage.getItem('token') || undefined;
+  getToken(): string | null {
+    return localStorage.getItem('token');
   }
 
-  getUserName(): string | undefined {
-    return localStorage.getItem('username') || undefined;
+  getUserName(): string | null {
+    return localStorage.getItem('username');
   }
 
   addToLocalStorage(key: string, value: string) {
@@ -78,10 +51,10 @@ export class AuthService {
     localStorage.removeItem('username');
   }
 
-  private getAuthHeaders(): { [key: string]: string } {
-    return {
+  private getAuthHeaders(): HttpHeaders {
+    return new HttpHeaders({
       Authorization: `Bearer ${this.getToken()}`,
       'Content-Type': 'application/json',
-    };
+    });
   }
 }

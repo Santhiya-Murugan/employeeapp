@@ -71,11 +71,13 @@ export class AssetService {
   addAssetForAdmin(assetInfor: any): Observable<any> {
     const url = `${this.baseUrl}admin/addAdmin`;
     const headers = this.getAuthHeaders();
+    const body = JSON.stringify(assetInfor);
+    console.log(body);
     return from(
       fetch(url, {
         method: 'POST',
         headers,
-        body: JSON.stringify(assetInfor),
+        body,
       }).then((response) => {
         if (!response.ok) {
           return Promise.reject('Api fetch failed');

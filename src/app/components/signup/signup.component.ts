@@ -12,13 +12,15 @@ import { LoadingService } from '../../services/loading.service';
 export class SignupComponent {
   credentials = {
     adminId: 0,
+    userId: 0,
     firstName: '',
     lastName: '',
     phoneno: '',
+    address: ',',
     email: '',
     password: '',
     reTypePassword: '',
-    status: null,
+    status: 'Inactive',
   };
 
   passwordsMatch: boolean = true;
@@ -32,22 +34,25 @@ export class SignupComponent {
 
   isValid(): boolean {
     if (this.credentials.firstName === '') {
-      alert('Please enter username');
+      alert('Please enter First Name');
       return false;
     } else if (this.credentials.lastName === '') {
-      alert('Please enter lastName');
+      alert('Please enter Last Name');
       return false;
     } else if (this.credentials.phoneno === '') {
-      alert('Please enter phoneno');
+      alert('Please enter Phone Number');
+      return false;
+    } else if (this.credentials.address === '') {
+      alert('Please enter Address');
       return false;
     } else if (this.credentials.email === '') {
-      alert('Please enter email');
+      alert('Please enter Email');
       return false;
     } else if (this.credentials.password === '') {
-      alert('Please enter password');
+      alert('Please enter Password');
       return false;
     } else if (this.credentials.reTypePassword === '') {
-      alert('Please enter password');
+      alert('Please enter Re-Type Password');
       return false;
     } else if (this.credentials.password !== this.credentials.reTypePassword) {
       alert('Passwords do not match');
@@ -76,6 +81,12 @@ export class SignupComponent {
 
     this.loadingService.setLoadingState(true);
     const isAdmin: boolean = this.selectedRole == 'admin';
+    if (isAdmin) {
+      delete (this.credentials as any).userId;
+    } else {
+      delete (this.credentials as any).adminId;
+    }
+    delete (this.credentials as any).reTypePassword;
     this.authService.signup(this.credentials, isAdmin).subscribe({
       next: (data) => {
         this.loadingService.setLoadingState(false);
