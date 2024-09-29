@@ -77,6 +77,21 @@
       />
     </div>
     <div class="input-group-register">
+      <label class="register-field-labels" for="email"
+        >Status<span class="required">*</span></label
+      >
+      <select
+              class="register-fields"
+              [(ngModel)]="credentials.status"
+              id="status"
+              name="status"
+              required
+            >
+              <option>Active</option>
+              <option>Inactive</option>
+            </select>
+    </div>
+    <div class="input-group-register">
       <label class="register-field-labels" for="password"
         >Password<span class="required">*</span></label
       >

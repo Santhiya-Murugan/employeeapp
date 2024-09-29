@@ -17,5 +17,9 @@ type user = {
   password: string;
   status: Status | null;
 };
+enum authStatus {
+  Active,
+  Inactive
+};
 
-export { admin, user };
+export { admin, user,authStatus };

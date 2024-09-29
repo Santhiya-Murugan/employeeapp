@@ -10,6 +10,7 @@ type asset = {
   imageUrl: string;
   status: Status;
 };
+
 type allocatedAsset = {
   requestId: number;
   adminId: number;

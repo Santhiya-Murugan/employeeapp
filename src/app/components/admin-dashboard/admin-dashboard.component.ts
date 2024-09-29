@@ -5,6 +5,7 @@ import {
   Status,
   AssetCategory,
   allocatedAsset,
+  assetSeriveRequest
 } from 'src/app/models/asset.model';
 import { user, admin } from 'src/app/models/user.model';
 import { MatTableDataSource } from '@angular/material/table';
@@ -25,6 +26,7 @@ export class AdminDashboardComponent implements AfterViewInit {
   dataSourceAllocated: MatTableDataSource<allocatedAsset>;
   searchResult: MatTableDataSource<user>;
   adminResult: MatTableDataSource<admin>;
+  serviceRequest: MatTableDataSource<assetSeriveRequest>;
   displayedColumns: string[] = [];
   activeBtn: number = 0;
   columnHeaders: { [key: string]: string } = {};
@@ -51,6 +53,13 @@ export class AdminDashboardComponent implements AfterViewInit {
     id: '',
   };
   maxDate: string = '';
+  approveRequest = {
+    adminId:'',
+    userId:'',
+    requestId:'',
+    serviceId:'',
+    message:'test'
+  };
 
   constructor(
     private assetService: AssetService,
@@ -61,6 +70,7 @@ export class AdminDashboardComponent implements AfterViewInit {
     this.dataSourceAllocated = new MatTableDataSource<allocatedAsset>([]);
     this.searchResult = new MatTableDataSource<user>([]);
     this.adminResult = new MatTableDataSource<admin>([]);
+    this.serviceRequest = new MatTableDataSource<assetSeriveRequest>([]);
     const today = new Date();
     this.maxDate = today.toISOString().split('T')[0];
   }
@@ -101,7 +111,7 @@ export class AdminDashboardComponent implements AfterViewInit {
 
     if (this.searchFormUser.email !== '') {
       this.loadingService.setLoadingState(true);
-      this.assetService.findUserByEmail(this.searchFormUser.id).subscribe({
+      this.assetService.findUserByEmail(this.searchFormUser.email).subscribe({
         next: (data) => {
           this.loadingService.setLoadingState(false);
           console.log('Data received:', data);
@@ -116,7 +126,7 @@ export class AdminDashboardComponent implements AfterViewInit {
     }
     if (this.searchFormUser.id !== '') {
       this.loadingService.setLoadingState(true);
-      this.assetService.findUserById(this.searchFormUser.email).subscribe({
+      this.assetService.findUserById(this.searchFormUser.id).subscribe({
         next: (data) => {
           this.loadingService.setLoadingState(false);
           console.log('Data received:', data);
@@ -135,6 +145,14 @@ export class AdminDashboardComponent implements AfterViewInit {
   clear() {
     this.searchFormUser.id = '';
     this.searchFormUser.email = '';
+    this.searchResult.data = [];
+    this.searchFormAdmin.id = '';
+    this.adminResult.data = [];
+    this.approveRequest.adminId = '';
+    this.approveRequest.requestId = '';
+    this.approveRequest.message = '';
+    this.approveRequest.serviceId = '';
+    this.approveRequest.userId = '';
   }
 
   isValidAssetForm(): boolean {
@@ -188,6 +206,86 @@ export class AdminDashboardComponent implements AfterViewInit {
     });
   }
 
+  approveAssetRequest(){
+    if (this.approveRequest.requestId === '' || this.approveRequest.adminId === ''){
+      if(this.approveRequest.requestId === '') alert('Please Enter Request Id');
+      else alert('Please Enter Admin Id')
+
+      return;
+    }
+
+    this.loadingService.setLoadingState(true);
+    this.assetService.approveAssetRequest(this.approveRequest.adminId,this.approveRequest.requestId).subscribe({
+      next: (data) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Data received:', data);
+        this.approveRequest.message = data;
+      },
+      error: (error) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Error fetching assets:', error);
+      },
+    });
+  }
+
+  approveServiceRequest(){
+    if (this.approveRequest.serviceId === '' || this.approveRequest.adminId === ''){
+      if(this.approveRequest.serviceId === '') alert('Please Enter Service Id');
+      else alert('Please Enter Admin Id')
+
+      return;
+    }
+
+    this.loadingService.setLoadingState(true);
+    this.assetService.approveAssetServiceRequest(this.approveRequest.adminId,this.approveRequest.serviceId).subscribe({
+      next: (data) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Data received:', data);
+        this.approveRequest.message = data;
+      },
+      error: (error) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Error fetching assets:', error);
+      },
+    });
+  }
+
+  approveAssetReturn(){
+    if (this.approveRequest.requestId === ''){
+      return;
+    }
+    this.loadingService.setLoadingState(true);
+    this.assetService.approveAssetReturnRequest(this.approveRequest.requestId,).subscribe({
+      next: (data) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Data received:', data);
+        this.approveRequest.message = data;
+      },
+      error: (error) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Error fetching assets:', error);
+      },
+    });
+  }
+
+  resignUser(){
+    if (this.approveRequest.userId === ''){
+      return;
+    }
+    this.loadingService.setLoadingState(true);
+    this.assetService.resignProtocol(this.approveRequest.userId).subscribe({
+      next: (data) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Data received:', data);
+        this.approveRequest.message = data;
+      },
+      error: (error) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Error fetching assets:', error);
+      },
+    });
+  }
+
   onActionClick(action: number) {
     if (action === this.activeBtn) return;
 
@@ -196,6 +294,14 @@ export class AdminDashboardComponent implements AfterViewInit {
     this.dataSourceAllocated.data = [];
     this.searchResult.data = [];
     this.adminResult.data = [];
+    this.serviceRequest.data = [];
+    this.approveRequest.message = '';
+    this.approveRequest.adminId = '';
+    this.approveRequest.serviceId = '';
+    this.approveRequest.requestId = '';
+    this.approveRequest.userId = '';
+    this.searchFormUser.email = '';
+    this.searchFormUser.id = '';
 
     this.content = action;
     this.activeBtn = action;
@@ -211,7 +317,12 @@ export class AdminDashboardComponent implements AfterViewInit {
       this.getAllUsers();
     } else if (action === 9) {
       this.getAllocationRequests();
+    } else if (action === 10) {
+      this.getServiceRequest();
+    } else if (action === 11) {
+      this.getReturnRequest();
     }
+    
   }
 
   getAllAssets() {
@@ -281,7 +392,7 @@ export class AdminDashboardComponent implements AfterViewInit {
         this.dataSourceAllocated.data = data;
         this.columnHeaders = {
           requestId: 'Request Id',
-          adminId: 'Admin Id',
+          adminId:'Admin Id',
           userId: 'User Id',
           firstName: 'First Name',
           assetId: 'Asset Id',
@@ -301,6 +412,7 @@ export class AdminDashboardComponent implements AfterViewInit {
   addAsset() {
     if (!this.isValidAssetForm()) return;
     this.loadingService.setLoadingState(true);
+    console.log(JSON.stringify(this.addAssetsForm));
     this.assetService.addAssetForAdmin(this.addAssetsForm).subscribe({
       next: (data) => {
         this.loadingService.setLoadingState(false);
@@ -369,6 +481,58 @@ export class AdminDashboardComponent implements AfterViewInit {
         this.columnHeaders = {
           requestId: 'Request Id',
           adminId: 'Admin Id',
+          userId: 'User Id',
+          firstName: 'First Name',
+          assetId: 'Asset Id',
+          assetName: 'Asset Name',
+          issuedDate: 'Issued Date',
+        };
+        this.dataSourceAllocated.data = data;
+        const temp: allocatedAsset = data[0];
+        this.displayedColumns = this.getKeys(temp);
+      },
+      error: (error) => {
+        this.loadingService.setLoadingState(false);
+        console.error('Error fetching assets:', error);
+      },
+    });
+  }
+
+  getServiceRequest(){
+    this.loadingService.setLoadingState(true);
+    this.assetService.getServiceRequest().subscribe({
+      next: (data) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Data received:', data);
+        this.columnHeaders = {
+          serviceId: 'Service Id',
+          userId: 'User Id',
+          firstName: 'First Name',
+          assetId: 'Asset Id',
+          assetName: 'Asset Name',
+          serviceType: 'Service Type',
+          status: 'Status',
+        };
+        this.serviceRequest.data = data;
+        const temp: allocatedAsset = data[0];
+        this.displayedColumns = this.getKeys(temp);
+      },
+      error: (error) => {
+        this.loadingService.setLoadingState(false);
+        console.error('Error fetching assets:', error);
+      },
+    });
+  }
+
+  getReturnRequest(){
+    this.loadingService.setLoadingState(true);
+    this.assetService.getReturnRequest().subscribe({
+      next: (data) => {
+        this.loadingService.setLoadingState(false);
+        console.log('Data received:', data);
+        this.columnHeaders = {
+          requestId: 'Request Id',
+          adminId:'Admin Id',
           userId: 'User Id',
           firstName: 'First Name',
           assetId: 'Asset Id',

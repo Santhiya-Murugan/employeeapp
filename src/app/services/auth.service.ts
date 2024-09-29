@@ -20,12 +20,12 @@ export class AuthService {
     return this.http.post(url, credentials, { responseType: 'text' });
   }
 
-  signup(userInfo: any, isAdmin: boolean): Observable<any> {
+  signup(userInfo: any, isAdmin: boolean): Observable<string> {
     const url = isAdmin
       ? `${this.baseUrl}admin/addAdmin`
       : `${this.baseUrl}user/addUser`;
 
-    return this.http.post(url, userInfo);
+    return this.http.post(url, userInfo,{ responseType: 'text' });
   }
 
   isAuthenticated(): boolean {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { user } from 'src/app/models/user.model';
+import { user, } from 'src/app/models/user.model';
 import { LoadingService } from '../../services/loading.service';
 
 @Component({
@@ -11,16 +11,14 @@ import { LoadingService } from '../../services/loading.service';
 })
 export class SignupComponent {
   credentials = {
-    adminId: 0,
-    userId: 0,
     firstName: '',
     lastName: '',
     phoneno: '',
-    address: ',',
+    address: '',
     email: '',
     password: '',
+    status: '',
     reTypePassword: '',
-    status: 'Inactive',
   };
 
   passwordsMatch: boolean = true;
@@ -81,17 +79,17 @@ export class SignupComponent {
 
     this.loadingService.setLoadingState(true);
     const isAdmin: boolean = this.selectedRole == 'admin';
-    if (isAdmin) {
-      delete (this.credentials as any).userId;
-    } else {
-      delete (this.credentials as any).adminId;
-    }
-    delete (this.credentials as any).reTypePassword;
+    delete (this.credentials as any).reTypePassword; // delete's retype pwd from object
+
+    console.log(JSON.stringify(this.credentials));
     this.authService.signup(this.credentials, isAdmin).subscribe({
       next: (data) => {
         this.loadingService.setLoadingState(false);
         console.log('Data received:', data);
-        if (data !== null) this.router.navigate(['/login']);
+        if (data !== null) {
+          alert(`${isAdmin?'Admin':'User'} Registered Successfuly`)
+          this.router.navigate(['/login']);
+        }
       },
       error: (error) => {
         this.loadingService.setLoadingState(false);

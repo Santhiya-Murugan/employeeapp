@@ -74,6 +74,41 @@
       >
         Show Asset Service Request
       </button>
+      <button
+        [ngClass]="{ 'active-content': content === 11 }"
+        (click)="onActionClick(11)"
+        class="actions"
+      >
+        Show Return Request
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 12 }"
+        (click)="onActionClick(12)"
+        class="actions"
+      >
+        Approve Asset Request
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 13 }"
+        (click)="onActionClick(13)"
+        class="actions"
+      >
+        Approve Service Request
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 14 }"
+        (click)="onActionClick(14)"
+        class="actions"
+      >
+        Approve Asset Return Request
+      </button>
+      <button
+        [ngClass]="{ 'active-content': content === 15 }"
+        (click)="onActionClick(15)"
+        class="actions"
+      >
+        Resign Protocol
+      </button>
     </div>
     <button id="scroll-right" class="scroll-arrow">&gt;</button>
   </div>
@@ -102,6 +137,7 @@
         [columnHeaders]="columnHeaders"
       ></app-material-table>
     </div>
+
     <div *ngIf="content === 4" id="content-4" class="content">
       <div class="addasset-container">
         <form id="addassetForm" (submit)="addAsset()">
@@ -218,6 +254,7 @@
         </form>
       </div>
     </div>
+
     <div *ngIf="content === 5" id="content-5" class="content">
       <app-material-table
         [dataSource]="adminResult"
@@ -241,6 +278,7 @@
         }"
       ></app-material-table>
     </div>
+
     <div *ngIf="content === 6" id="content-6" class="content">
       <app-material-table
         [dataSource]="searchResult"
@@ -262,6 +300,7 @@
             }"
       ></app-material-table>
     </div>
+
     <div *ngIf="content === 7" id="content-7" class="content">
       <div style="width: 100%; height: 100%">
         <form class="search-bar-container">
@@ -321,6 +360,7 @@
         ></app-material-table>
       </div>
     </div>
+
     <div *ngIf="content === 8" id="content-8" class="content">
       <div style="width: 100%; height: 100%">
         <form class="search-bar-container">
@@ -368,6 +408,7 @@
         ></app-material-table>
       </div>
     </div>
+    
     <div *ngIf="content === 9" id="content-9" class="content">
       <app-material-table
         [dataSource]="dataSourceAllocated"
@@ -375,5 +416,153 @@
         [columnHeaders]="columnHeaders"
       ></app-material-table>
     </div>
+
+    <div *ngIf="content === 10" id="content-10" class="content">
+      <app-material-table
+        [dataSource]="serviceRequest"
+        [displayedColumns]="displayedColumns"
+        [columnHeaders]="columnHeaders"
+      ></app-material-table>
+    </div>
+
+    <div *ngIf="content === 11" id="content-11" class="content">
+      <app-material-table
+        [dataSource]="dataSourceAllocated"
+        [displayedColumns]="displayedColumns"
+        [columnHeaders]="columnHeaders"
+      ></app-material-table>
+    </div>
+
+    <div *ngIf="content === 12" id="content-12" class="content">
+        <div style="width: 100%; height: 100%;display:flex;align-items:center;flex-direction:column">
+          <form class="search-bar-container">
+            <input
+              [(ngModel)]="approveRequest.requestId"
+              type="text"
+              class="addasset-fields"
+              id="requestId"
+              name="requestId"
+              placeholder="Request Id"
+            />
+            <input
+              [(ngModel)]="approveRequest.adminId"
+              type="text"
+              class="addasset-fields"
+              id="adminId"
+              name="adminId"
+              placeholder="Admin Id"
+            />
+            <button
+              (click)="approveAssetRequest()"
+              class="actions"
+            >
+              Approve
+            </button>
+            <button
+              (click)="clear()"
+              class="actions"
+            >
+              Clear
+            </button>
+          </form>
+          <h3 style="margin-top: 20px;" *ngIf="approveRequest.message !== ''">{{ approveRequest.message }}</h3>
+      </div>
+    </div>
+
+    <div *ngIf="content === 13" id="content-13" class="content">
+      <div style="width: 100%; height: 100%;display:flex;align-items:center;flex-direction:column">
+        <form class="search-bar-container">
+          <input
+            [(ngModel)]="approveRequest.serviceId"
+            type="text"
+            class="addasset-fields"
+            id="serviceId"
+            name="serviceId"
+            placeholder="Service Id"
+          />
+          <input
+            [(ngModel)]="approveRequest.adminId"
+            type="text"
+            class="addasset-fields"
+            id="adminId"
+            name="adminId"
+            placeholder="Admin Id"
+          />
+          <button
+            (click)="approveServiceRequest()"
+            class="actions"
+          >
+            Approve
+          </button>
+          <button
+            (click)="clear()"
+            class="actions"
+          >
+            Clear
+          </button>
+        </form>
+        <h3 style="margin-top: 20px;" *ngIf="approveRequest.message !== ''">{{ approveRequest.message }}</h3>
+    </div>
+    
+  </div>
+
+  <div *ngIf="content === 14" id="content-14" class="content">
+    <div style="width: 100%; height: 100%; display:flex;align-items:center;flex-direction:column">
+      <form class="search-bar-container">
+        <input
+          [(ngModel)]="approveRequest.requestId"
+          type="text"
+          class="addasset-fields"
+          id="serviceId"
+          name="serviceId"
+          placeholder="Request Id"
+        />
+        <button
+          (click)="approveAssetReturn()"
+          class="actions"
+        >
+          Approve
+        </button>
+        <button
+          (click)="clear()"
+          class="actions"
+        >
+          Clear
+        </button>
+      </form>
+      <h3 style="margin-top: 20px;" *ngIf="approveRequest.message !== ''">{{ approveRequest.message }}</h3>
+  </div>
+  
+  </div>
+
+  <div *ngIf="content === 15" id="content-15" class="content">
+    <div style="width: 100%; height: 100%; display:flex;align-items:center;flex-direction:column">
+      <form class="search-bar-container">
+        <input
+          [(ngModel)]="approveRequest.userId"
+          type="text"
+          class="addasset-fields"
+          id="serviceId"
+          name="serviceId"
+          placeholder="User Id"
+        />
+        <button
+          (click)="resignUser()"
+          class="actions"
+        >
+          Resign
+        </button>
+        <button
+          (click)="clear()"
+          class="actions"
+        >
+          Clear
+        </button>
+      </form>
+      <h3 style="margin-top: 20px;" *ngIf="approveRequest.message !== ''">{{ approveRequest.message }}</h3>
+  </div>
+  
+  </div>
+
   </div>
 </div>
